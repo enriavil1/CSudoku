@@ -4,6 +4,19 @@
 #include "sudoku.hpp"
 
 
+Sudoku::Sudoku(int board[9][9]) {
+    Sudoku::row = 0;
+    Sudoku::col = 0;
+
+    for(int i = 0; i < 9; ++i)  {
+        std::vector<int> row;
+        for(int j = 0; j < 9; ++j)   {
+            row.push_back(board[i][j]);
+        }
+        board_.push_back(row);
+    }
+}
+
 // prints out sudoku board
 void Sudoku::print_board() {
     for(int k = 0; k < Sudoku::board_[0].size()*3; ++k){
@@ -87,12 +100,12 @@ bool Sudoku::find_empty_spot() {
     return false;
 }
 
-bool Sudoku::is_valid_place(int row, int col, int& num) {
-    return Sudoku::is_row_valid(col, num) && Sudoku::is_column_valid(row, num) && Sudoku::is_block_valid(row, col, num);
+bool Sudoku::is_valid_place(int row, int col, const int& num) {
+    return Sudoku::is_row_valid(num) && Sudoku::is_column_valid(num) && Sudoku::is_block_valid(row-row%3, col-col%3, num);
 }
 
-bool Sudoku::is_row_valid(int col, int& num) {
-    for(col = 0; col < 9; ++col) {
+bool Sudoku::is_row_valid(const int& num) {
+    for(int col = 0; col < 9; ++col) {
         if(Sudoku::board_[Sudoku::row][col] == num) {
             return false;
         }
@@ -100,8 +113,8 @@ bool Sudoku::is_row_valid(int col, int& num) {
     return true;
 }
 
-bool Sudoku::is_column_valid(int row, int& num) {
-    for(row = 0; row < 9; ++row) {
+bool Sudoku::is_column_valid(const int& num) {
+    for(int row = 0; row < 9; ++row) {
         if(Sudoku::board_[row][Sudoku::col] == num) {
             return false;
         }
@@ -110,7 +123,7 @@ bool Sudoku::is_column_valid(int row, int& num) {
 }
 
 // check if block is valid
-bool Sudoku::is_block_valid(int row, int col, int& num) {
+bool Sudoku::is_block_valid(int row, int col, const int& num) {
     for(int i = 0; i < 3; ++i) {
         for(int j = 0; j < 3; ++j) {
             if(Sudoku::board_[i+row][j+col] == num) {
@@ -123,25 +136,27 @@ bool Sudoku::is_block_valid(int row, int col, int& num) {
 
 
 bool Sudoku::solve() {
-    Sudoku::print_board();
-
     if(!Sudoku::find_empty_spot()){
+        std::cout << "here";
         Sudoku::print_board();
         std::cout << "\nBOARD HAS BEEN COMPLETED\n";
         return true;
     }
 
-    for(int num = 1; num < 9; ++num) {
+    for(int num = 1; num <= 9; ++num) {
         if(Sudoku::is_valid_place(Sudoku::row, Sudoku::col, num)){
             Sudoku::board_[Sudoku::row][Sudoku::col] = num;
 
             if(Sudoku::solve()){
+                std::cout << "here";
                 return true;
             }
-
-            Sudoku::board_[Sudoku::row][Sudoku::col] = 0;
+            
+            Sudoku::board_[row][col] = 0;
+            std::cout << Sudoku::row << " " << Sudoku::col << "\n";
         }
     }
+
     return false;
 }
 

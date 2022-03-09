@@ -3,7 +3,8 @@
 class Sudoku
 {
 public:
-    Sudoku(std::vector< std::vector<int> >& board): board_(board), row(0), col(0) {}
+
+    Sudoku(int board[9][9]);
     ~Sudoku() {};
     void print_board();
     bool solve();
@@ -14,15 +15,15 @@ public:
     bool are_blocks_valid();
 
     bool find_empty_spot();
-    bool is_valid_place(int row, int col, int& num);
-    bool is_row_valid(int col, int& num);
-    bool is_column_valid(int row, int& num);
-    bool is_block_valid(int row, int col, int& num);
+    bool is_valid_place(int row, int col, const int& num);
+    bool is_row_valid(const int& num);
+    bool is_column_valid(const int& num);
+    bool is_block_valid(int row, int col, const int& num);
 
     
 
 private:
-    std::vector< std::vector<int> >& board_;
+    std::vector< std::vector<int> > board_;
     int row;
     int col;
 };
