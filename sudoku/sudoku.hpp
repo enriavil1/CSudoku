@@ -14,10 +14,10 @@ public:
     bool are_blocks_valid();
 
     bool find_empty_spot();
-    bool is_valid();
-    bool is_row_valid(int& num);
-    bool is_column_valid(int& num);
-    bool is_block_valid(int& num);
+    bool is_valid_place(int row, int col, int& num);
+    bool is_row_valid(int col, int& num);
+    bool is_column_valid(int row, int& num);
+    bool is_block_valid(int row, int col, int& num);
 
     
 
