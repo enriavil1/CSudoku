@@ -16,20 +16,20 @@ int main() {
         {0,0,5,2,0,6,3,0,0}
     };
 
-    Sudoku game(board);
     std::cout << "\n!!!!STARTING BOARD!!!!\n";
+    Sudoku game(board);
     game.print_board();
 
-
+    
     bool solve = game.solve();
     if(solve) {
         std::cout << "\n!!!!BOARD HAS BEEN SOLVED!!!!\n";
     }
     else {
-        std::cout << "\n<<<<BOARD CANNOT BE SOLVED>>>>\n";
+        std::cout << "\n<<BOARD COULDN'T BE SOLVED>>\n";
     }
 
     game.print_board();
-
+    
     return 0;
 }
