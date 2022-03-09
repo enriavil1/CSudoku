@@ -87,7 +87,7 @@ bool Sudoku::find_empty_spot() {
 }
 
 bool Sudoku::is_row_valid(int& num) {
-    for(Sudoku::col = 0; Sudoku::col < 9; ++col){
+    for(Sudoku::col = 0; Sudoku::col < 9; ++Sudoku::col){
         if(Sudoku::board_[Sudoku::row][Sudoku::col] == num){
             return false;
         }
