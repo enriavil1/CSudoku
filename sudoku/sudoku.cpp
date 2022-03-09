@@ -1,6 +1,8 @@
+
 #include <vector>
 #include <iostream>
 #include <map>
+
 #include "sudoku.hpp"
 
 
@@ -10,7 +12,7 @@ Sudoku::Sudoku(int board[9][9]) {
         for(int j = 0; j < 9; ++j)   {
             row.push_back(board[i][j]);
         }
-        board_.push_back(row);
+        Sudoku::board_.push_back(row);
     }
 }
 
@@ -48,7 +50,7 @@ bool Sudoku::is_board_valid() {
 
     if(!is_valid) {
         std::cout << "BOARD IS NOT VALID\n";
-        Sudoku::~Sudoku();
+        return false;
     }
 
     return Sudoku::are_rows_valid() && Sudoku::are_columns_valid() && Sudoku::are_blocks_valid();
@@ -155,27 +157,25 @@ bool Sudoku::is_block_valid(const int& row, const int& col, const int& num) {
     return true;
 }
 
-// solves the board using DFS 
-bool Sudoku::solve() {
-    int row, col;
-    if(!Sudoku::find_empty_spot(row, col)) {
-        return true;
-    }
-    // checks all possible numbers
-    for(int num = 1; num <= 9; ++num) {
-        if(Sudoku::is_valid_place(row, col, num)) {
-            Sudoku::board_[row][col] = num;
 
-            // if recursive stack is true then we are done    
-            if(Sudoku::solve()){
-                return true;
-            }
-            
-            // set it back to zero while moving back up or trying another num
-            Sudoku::board_[row][col] = 0;
+void Sudoku::generate() {
+    std::vector< std::vector<int> > new_board;
+    
+    // creating blank board
+    for(int i = 0; i < 9; ++i) {
+        std::vector<int> row;
+        for(int j = 0; j < 9; ++j) {
+            row.push_back(0);
         }
+        new_board.push_back(row);
     }
 
-    return false;
+    // generate random number and set the first number of the table equal to that
+    srand(time(0));
+    int num = (rand()%9)+1;
+    
+    new_board[0][0] = num;
+    
+    Sudoku::board_ = new_board;
 }
 

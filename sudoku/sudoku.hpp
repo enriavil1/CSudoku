@@ -7,6 +7,8 @@ public:
     Sudoku(int board[9][9]);
     ~Sudoku() {};
     void print_board();
+
+    void generate();
     bool solve();
 
     bool is_board_valid();
