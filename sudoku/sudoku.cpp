@@ -89,10 +89,10 @@ bool Sudoku::are_blocks_valid() {
 }
 
 // finds empty spot to add number into
-bool Sudoku::find_empty_spot() {
-    for(Sudoku::row = 0; Sudoku::row < Sudoku::board_.size(); ++Sudoku::row) {
-        for(Sudoku::col = 0; Sudoku::col < Sudoku::board_.size(); ++Sudoku::col) {
-            if(Sudoku::board_[Sudoku::row][Sudoku::col] == 0 ){
+bool Sudoku::find_empty_spot(int& row, int& col) {
+    for(row = 0; row < Sudoku::board_.size(); ++row) {
+        for(col = 0; col < Sudoku::board_.size(); ++col) {
+            if(Sudoku::board_[row][col] == 0 ){
                 return true;
             }
         }
@@ -100,22 +100,22 @@ bool Sudoku::find_empty_spot() {
     return false;
 }
 
-bool Sudoku::is_valid_place(int row, int col, const int& num) {
-    return Sudoku::is_row_valid(num) && Sudoku::is_column_valid(num) && Sudoku::is_block_valid(row-row%3, col-col%3, num);
+bool Sudoku::is_valid_place(const int& row, const int& col, const int& num) {
+    return Sudoku::is_row_valid(row, num) && Sudoku::is_column_valid(col, num) && Sudoku::is_block_valid(row-row%3, col-col%3, num);
 }
 
-bool Sudoku::is_row_valid(const int& num) {
+bool Sudoku::is_row_valid(const int& row, const int& num) {
     for(int col = 0; col < 9; ++col) {
-        if(Sudoku::board_[Sudoku::row][col] == num) {
+        if(Sudoku::board_[row][col] == num) {
             return false;
         }
     }
     return true;
 }
 
-bool Sudoku::is_column_valid(const int& num) {
+bool Sudoku::is_column_valid(const int& col, const int& num) {
     for(int row = 0; row < 9; ++row) {
-        if(Sudoku::board_[row][Sudoku::col] == num) {
+        if(Sudoku::board_[row][col] == num) {
             return false;
         }
     }
@@ -123,7 +123,7 @@ bool Sudoku::is_column_valid(const int& num) {
 }
 
 // check if block is valid
-bool Sudoku::is_block_valid(int row, int col, const int& num) {
+bool Sudoku::is_block_valid(const int& row, const int& col, const int& num) {
     for(int i = 0; i < 3; ++i) {
         for(int j = 0; j < 3; ++j) {
             if(Sudoku::board_[i+row][j+col] == num) {
@@ -136,24 +136,22 @@ bool Sudoku::is_block_valid(int row, int col, const int& num) {
 
 
 bool Sudoku::solve() {
-    if(!Sudoku::find_empty_spot()){
-        std::cout << "here";
+    int row, col;
+    if(!Sudoku::find_empty_spot(row, col)){
         Sudoku::print_board();
-        std::cout << "\nBOARD HAS BEEN COMPLETED\n";
         return true;
     }
 
     for(int num = 1; num <= 9; ++num) {
-        if(Sudoku::is_valid_place(Sudoku::row, Sudoku::col, num)){
-            Sudoku::board_[Sudoku::row][Sudoku::col] = num;
+        if(Sudoku::is_valid_place(row, col, num)) {
+            Sudoku::board_[row][col] = num;
 
             if(Sudoku::solve()){
-                std::cout << "here";
+                std::cout << "\nBOARD HAS BEEN COMPLETED\n";
                 return true;
             }
             
             Sudoku::board_[row][col] = 0;
-            std::cout << Sudoku::row << " " << Sudoku::col << "\n";
         }
     }
 
