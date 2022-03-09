@@ -5,9 +5,6 @@
 
 
 Sudoku::Sudoku(int board[9][9]) {
-    Sudoku::row = 0;
-    Sudoku::col = 0;
-
     for(int i = 0; i < 9; ++i)  {
         std::vector<int> row;
         for(int j = 0; j < 9; ++j)   {
