@@ -19,7 +19,7 @@ int main() {
     Sudoku game(board);
     game.print_board();
 
-    auto solve = game.solve();
+    bool solve = game.solve();
     if(solve) {
         std::cout << "\n!!!!BOARD HAS BEEN SOLVED!!!!\n";
     }
