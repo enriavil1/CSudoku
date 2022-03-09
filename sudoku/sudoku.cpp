@@ -134,8 +134,7 @@ bool Sudoku::is_block_valid(const int& row, const int& col, const int& num) {
 // solves the board using DFS 
 bool Sudoku::solve() {
     int row, col;
-    if(!Sudoku::find_empty_spot(row, col)){
-        Sudoku::print_board();
+    if(!Sudoku::find_empty_spot(row, col)) {
         return true;
     }
     // checks all possible numbers

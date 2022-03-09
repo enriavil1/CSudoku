@@ -17,7 +17,9 @@ int main() {
     };
 
     Sudoku game(board);
+    std::cout << "\n!!!!STARTING BOARD!!!!\n";
     game.print_board();
+
 
     bool solve = game.solve();
     if(solve) {
@@ -26,7 +28,8 @@ int main() {
     else {
         std::cout << "\n<<<<BOARD CANNOT BE SOLVED>>>>\n";
     }
-    
+
+    game.print_board();
 
     return 0;
 }
