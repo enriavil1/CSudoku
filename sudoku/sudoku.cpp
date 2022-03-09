@@ -1,5 +1,6 @@
 #include <vector>
 #include <iostream>
+#include <map>
 #include "sudoku.hpp"
 
 
@@ -35,8 +36,39 @@ void Sudoku::print_board() {
 
 }
 
-bool Sudoku::isValid() {
-    return false;
+bool Sudoku::is_valid() {
+    return Sudoku::is_row_valid() && Sudoku::is_column_valid() && Sudoku::is_block_valid();
+}
+
+bool Sudoku::is_row_valid() {
+    for(int i = 0; i < Sudoku::board_.size(); ++i){
+        std::map<int, bool> row;
+        for(int j = 0; j < Sudoku::board_[i].size(); ++j){
+            if(row[Sudoku::board_[i][j]]){
+                return false;
+            }
+            row[Sudoku::board_[i][j]] = true;
+        }
+    }
+    return true;
+}
+
+bool Sudoku::is_column_valid() {
+    for(int i = 0; i < Sudoku::board_.size(); ++i) {
+        std::map<int, bool> column;
+        for(int j = 0; j < Sudoku::board_.size(); ++j) {
+            if(column[Sudoku::board_[j][i]]){
+                return false;
+            }
+
+            column[Sudoku::board_[j][i]] = true;
+        }
+    }
+    return true;
+}
+
+bool Sudoku::is_block_valid() {
+    return true;
 }
 
 void Sudoku::solve() {

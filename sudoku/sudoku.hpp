@@ -7,7 +7,12 @@ public:
     ~Sudoku() {};
     void print_board();
     void solve();
-    bool isValid();
+
+    bool is_valid();
+    bool is_row_valid();
+    bool is_column_valid();
+    bool is_block_valid();
+
     
 
 private:
