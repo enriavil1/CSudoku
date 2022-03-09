@@ -87,8 +87,17 @@ bool Sudoku::find_empty_spot() {
 }
 
 bool Sudoku::is_row_valid(int& num) {
-    for(Sudoku::col = 0; Sudoku::col < 9; ++Sudoku::col){
-        if(Sudoku::board_[Sudoku::row][Sudoku::col] == num){
+    for(Sudoku::col = 0; Sudoku::col < 9; ++Sudoku::col) {
+        if(Sudoku::board_[Sudoku::row][Sudoku::col] == num) {
+            return false;
+        }
+    }
+    return true;
+}
+
+bool Sudoku::is_column_valid(int& num) {
+    for(Sudoku::row = 0; Sudoku::row < 9; ++Sudoku::row) {
+        if(Sudoku::board_[Sudoku::row][Sudoku::col] == num) {
             return false;
         }
     }
