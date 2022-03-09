@@ -96,6 +96,30 @@ bool Sudoku::find_empty_spot(int& row, int& col) {
     }
     return false;
 }
+// solves the board using DFS 
+bool Sudoku::solve() {
+    int row, col;
+    if(!Sudoku::find_empty_spot(row, col)) {
+        return true;
+    }
+
+    // checks all possible numbers
+    for(int num = 1; num <= 9; ++num) {
+        if(Sudoku::is_valid_place(row, col, num)) {
+            Sudoku::board_[row][col] = num;
+
+            // if recursive stack is true then we are done    
+            if(Sudoku::solve()){
+                return true;
+            }
+            
+            // set it back to zero while moving back up or trying another num
+            Sudoku::board_[row][col] = 0;
+        }
+    }
+
+    return false;
+}
 
 bool Sudoku::is_valid_place(const int& row, const int& col, const int& num) {
     return Sudoku::is_row_valid(row, num) && Sudoku::is_column_valid(col, num) && Sudoku::is_block_valid(row-row%3, col-col%3, num);
